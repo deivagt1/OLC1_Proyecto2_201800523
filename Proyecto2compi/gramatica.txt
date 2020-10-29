@@ -1,0 +1,182 @@
+
+
+S -> LISTA_CLASES
+
+LISTA_CLASES -> LISTA_CLASES CLASE
+    | CLASE
+
+CLASE -> 'public' TIPO_CLASE identificador '{' ARGUMENTOS '}'
+    | 'public' TIPO_CLASE identificador '{' '}'
+
+ARGUMENTOS -> FUNCION
+	| DECLARACION
+	| ASIGNACION
+	| MAIN
+
+TIPO_CLASE -> 'class'
+    | 'interface'
+
+SENTENCIAS -> SENTENCIAS SENTENCIAS_G
+    | SENTENCIAS_G 
+
+SENTENCIAS_G -> 
+	| DECLARACION
+	| ASIGNACION
+	//Repeticion
+	| FOR
+	| WHILE	
+	| DOWHILE
+	//Control
+*	| IF
+	//Otros
+	| BREAK
+	| CONTINUE
+	| RETURN
+	| LLAMADAMETODO
+	//Predeterminadas
+	| PRINT
+	
+
+DECLARACION -> TIPO 'identificador' 'igual' EXPRESION 'puntocoma'
+
+ASIGNACION -> 'identificador' ' igual' EXPRESION 'puntocoma'
+
+WHILE -> 'while' ( EXPRESION )  BLOQUE_SENTENCIAS 
+
+DOWHILE -> 'do' BLOQUE_SENTENCIAS WHILEDOWHILE
+
+WHILEDOWHILE -> 'while' '(' EXPRESION ')' 'puntocoma'
+
+FOR -> 'for''(' DECLARAROASIGNAR 'puntocoma' EXPRESION 'puntocoma' EXPRESION ')' BLOQUE_SENTENCIAS
+
+BREAK -> 'break' 'puntocoma'
+
+CONTINUE -> 'continue' 'puntocoma'
+
+RETURN -> 'return' EXPRESION 'puntocoma'
+
+LLAMADAMETODO -> 'identificador' '(' LISTA_PARAMETROS 'puntocoma'
+
+PRINT -> 'System' '.' 'out' '.' 'print' CONDICION pcoma
+
+MAIN -> 'public' 'static' 'void' 'main' '(' 'String' '[' ']' 'args' ')' BLOQUE_SENTENCIAS
+
+CONDICION ->  '(' EXPRESION ')'
+
+FUNCION -> TIPO 'identificador' '(' LISTA_PARAMETROS BLOQUE_SENTENCIAS
+
+LISTA_PARAMETROS -> PARAMETROS ')'
+	| ')'
+
+PARAMETROS -> PARAMETROS ',' PARAM
+	PARAM
+
+PARAM -> TIPO 'identificador'
+
+BLOQUE_SENTENCIAS -> { BLOQUEDESENTENCIAS 
+   
+BLOQUEDESENTENCIAS -> SENTENCIAS '}'
+	| '}
+
+TIPO -> int
+	| boolean
+	| double
+    | String
+	| char
+    | void
+
+DECLARAROASIGNAR -> DECLARACION
+	| ASIGNACION
+
+IF -> IFDEF ELSE **************************************************************************************************
+	| IFDEF
+
+EXPRESION ->
+	// Aritmeticas
+	| EXPRESION 'mas' EXPRESION		
+	| EXPRESION 'menos' EXPRESION		
+	| EXPRESION 'por' EXPRESION		
+	| EXPRESION 'division' EXPRESION
+	| EXPRESION 'incremento'
+	| EXPRESION 'decremento' 
+	| 'menos' EXPRESION
+	// Relacionales
+	| EXPRESION mayorQ EXPRESION	
+	| EXPRESION menorQ EXPRESION	
+	| EXPRESION mayosIgual EXPRESION	
+	| EXPRESION menorIgual EXPRESION	
+	| EXPRESION dobleIgual EXPRESION	
+	| EXPRESION distinto EXPRESION	
+
+	// Logicas
+	| EXPRESION or_ EXPRESION		
+	| EXPRESION and_ EXPRESION		
+	| not_ EXPRESION
+	| EXPRESION xor EXPRESION					
+	
+	| parAbre EXPRESION parCierra
+	| PRIMITIVO						
+
+PRIMITIVO -> decimal		
+	| cadena		
+	| true_			
+	| false_		
+	| identificador 
+
+//LEXEMAS
+public*
+static*
+main*
+args*
+class*
+interface*
+do*
+while*
+for*
+if*
+else*
+break*
+continue*
+return*
+System*
+out*
+print*
+
+String
+int
+boolean
+double
+char
+void
+
+decimal
+cadena
+true
+false
+identificador
+{
+}
+(
+)
+[
+]
+=
+,
+;
++
+-
+++
+--
+*
+/
+>
+<
+>=
+<=
+==
+!=
+||
+&&
+!
+^
+.
