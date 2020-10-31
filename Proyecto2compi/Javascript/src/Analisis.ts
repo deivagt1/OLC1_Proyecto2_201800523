@@ -14,40 +14,24 @@ export function AnalizarJava(entrada:string):String{
     let codigo = 
     `
     int a (String b, int abc){
-        int a,b = 55, c = "abc"; 
-
+        int a,b = 55, c = "abc";
         for(int i = 0; i < 10; i++){
-            int f = 10;     
+            int f = 10;
         }
     }
-
-    int a (String b, int abc){
-        int a=0.0;  
-    }
-
     public static void main(String[] args){
+        a (String b, int abc);
         int a=0.0;
-        while(true){ 
+        while(true){
             a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
-           
         }
-
         break;
         continue;
         return "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
-    }
-     
-       
-    
-
-    `;
-
+    }`;
     /*
 
 a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
-    
-   
-
 
     int a (String b, int abc){
         int a,b = 55, c = "abc"; 

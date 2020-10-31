@@ -17,11 +17,13 @@ function AnalizarJava(entrada) {
         }
     }
 
+    void c(String b, int abc);
     int a (String b, int abc){
         int a=0.0;  
     }
 
     public static void main(String[] args){
+        a (String b, int abc);
         int a=0.0;
         while(true){ 
             a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
@@ -40,9 +42,6 @@ function AnalizarJava(entrada) {
     /*
 
 a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
-    
-   
-
 
     int a (String b, int abc){
         int a,b = 55, c = "abc";

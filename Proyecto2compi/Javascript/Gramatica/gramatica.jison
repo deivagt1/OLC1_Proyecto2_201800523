@@ -13,6 +13,7 @@
 	const { Return } = require("../dist/ast/sentencias/Return");
 
 	const { Funcion } = require("../dist/ast/argumentos/Funcion")
+	const { DeclFuncion } = require("../dist/ast/argumentos/DeclFuncion")
 	const { OperacionAritmetica } = require("../dist/ast/expresiones/OperacionAritmetica");
 	const { OperacionLogica } = require("../dist/ast/expresiones/OperacionLogica");
 	const { OperacionRelacional } = require("../dist/ast/expresiones/OperacionRelacional");
@@ -25,6 +26,7 @@
 	const { Parametro } = require("../dist/ast/argumentos/Parametro");
 	const { MedAsig } = require("../dist/ast/sentencias/MedAsig");
 	const { FullAsig } = require("../dist/ast/sentencias/FullAsig");
+	const { LlamadaMetodo } = require("../dist/ast/sentencias/LlamadaMetodo");
 
 
 	const ListaToken =require( "../dist/ListaToken");
@@ -86,7 +88,6 @@
 "="                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"igual", yytext));return 'igual_'; %}
 ","                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"coma", yytext));return 'coma_'; %}
 ";"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"puntocoma", yytext));return 'puntocoma_'; %}
-
 
 "++"                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"incremento", yytext));return 'incremento_'; %}
 "--"                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"decremento", yytext));return 'decremento_'; %}
@@ -242,17 +243,19 @@ SENTENCIAS_G :
 	//Control
 *	| IF			{ $$ = $1; }
 	//Otros
-*	| BREAK			{ $$ = $1; }
-*	| CONTINUE		{ $$ = $1; }
-*	| RETURN		{ $$ = $1; }
-*	| LLAMADAMETODO	{ $$ = $1; }
+	| BREAK			{ $$ = $1; }
+	| CONTINUE		{ $$ = $1; }
+	| RETURN		{ $$ = $1; }
+	| LLAMADAMETODO	{ $$ = $1; }
 	| JUSTID incremento_ puntocoma_	{ $$ = new OperacionAritmetica( TipoDeOperacion.INCREMENTO, $1, null, this._$.first_line, this._$.first_column); }
 	| JUSTID decremento_ puntocoma_	{ $$ = new OperacionAritmetica( TipoDeOperacion.DECREMENTO, $1, null, this._$.first_line, this._$.first_column); }
-	
 	//Predeterminadas
 	| PRINT1			{ $$ = $1; }
 	;
 
+LLAMADAMETODO : 
+	identificador_  LISTA_PARAMETROS puntocoma_  { $$ = new LlamadaMetodo($1, $2, this._$.first_line, this._$.first_column); }
+	;
 
 JUSTID:
 	identificador_ { $$ = new Identificador( $1, this._$.first_line, this._$.first_column); }
@@ -308,6 +311,22 @@ RETURN :
 	return_ EXPRESION puntocoma_	{ $$ = new Return($1,$2, this._$.first_line, this._$.first_column)}
 	;
 
+IF : if_ CONDICION BLOQUE_SENTENCIAS
+	| if_ CONDICION BLOQUE_SENTENCIAS ELSE1
+	;
+
+ELSE1 : ELSE1 ELSE {
+		$1.push($2);
+		$$ = $1;
+	  }
+	| ELSE {
+		$$ = [$1];
+	}
+
+
+ELSE : else_ BLOQUE_SENTENCIAS;
+	;
+
 
 
 DECLARACIONASIGNACION :
@@ -329,6 +348,8 @@ BLOQUE_SENTENCIAS :
 FUNCION : 
 	void_ identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion(Tipo.VOID, $2, $3, $4, this._$.first_line, this._$.first_column); }
 	| TIPO identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion($1, $2, $3, $4, this._$.first_line, this._$.first_column); }
+	| void_ identificador_  LISTA_PARAMETROS  puntocoma_ { $$ = new DeclFuncion(Tipo.VOID, $2, $3, this._$.first_line, this._$.first_column); }
+	| TIPO identificador_  LISTA_PARAMETROS puntocoma_ { $$ = new DeclFuncion($1, $2, $3, this._$.first_line, this._$.first_column); }
 	;
 
 LISTA_PARAMETROS : 
