@@ -21,17 +21,19 @@ export class Parametro extends Sentencia {
 
     generarGrafo(g: ValorGrafo, padre: String) {
         let p = padre;
-
         let nombreHijo = "nodo"+g.contador;
-        g.salida += "  "+nombreHijo +"[label=\"TIPO\"];\n";
-        g.salida += "  "+padre +" -> "+ nombreHijo+";\n";
-        g.contador++;        
-        p = nombreHijo;
-
-        nombreHijo = "nodo"+g.contador;
-        g.salida += "  "+nombreHijo +"[label=\""+Tipo[this.tipo]+"\"];\n";
-        g.salida += "  "+p +" -> "+ nombreHijo+";\n";
-        g.contador++;   
+        if(this.tipo != null){
+            g.salida += "  "+nombreHijo +"[label=\"TIPO\"];\n";
+            g.salida += "  "+padre +" -> "+ nombreHijo+";\n";
+            g.contador++;        
+            p = nombreHijo;
+    
+            nombreHijo = "nodo"+g.contador;
+            g.salida += "  "+nombreHijo +"[label=\""+Tipo[this.tipo]+"\"];\n";
+            g.salida += "  "+p +" -> "+ nombreHijo+";\n";
+            g.contador++;   
+        }
+       
 
         // Id
         nombreHijo = "nodo" + g.contador;

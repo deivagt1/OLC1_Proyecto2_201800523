@@ -90,7 +90,7 @@
 ")"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cerrarPar", yytext));return 'cerrarPar_'; %}
 "["                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"abrirCor", yytext));return 'abrirCor_'; %}
 "]"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cerrarCor", yytext));return 'cerrarCor_'; %}
-"="                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"igual", yytext));return 'igual_'; %}
+
 ","                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"coma", yytext));return 'coma_'; %}
 ";"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"puntocoma", yytext));return 'puntocoma_'; %}
 
@@ -100,11 +100,12 @@
 "-"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"menos", yytext));return 'menos_'; %}
 "*"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"por", yytext));return 'por_'; %}
 "/"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"division", yytext));return 'division_'; %}
-">="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"mayorIgual", yytext));return 'mayorIgual'; %}
+">="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"mayorIgual", yytext));return 'mayorIgual_'; %}
 "<="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"menorIgual", yytext));return 'menorIgual_'; %}
 ">"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"mayor", yytext));return 'mayor_'; %}
 "<"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"menor", yytext));return 'menor_'; %}
 "=="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"dosIgual", yytext));return 'dosIgual_'; %}
+"="                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"igual", yytext));return 'igual_'; %}
 "!="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"distinto", yytext));return 'distinto_'; %}
 "||"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"or", yytext));return 'or_'; %}
 "&&"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"and", yytext));return 'and_'; %}
@@ -125,10 +126,12 @@
 %left 'or_'
 %left 'and_'
 %left 'xor_'
+
 %left 'dosIgual_' 'distinto_'
 
 %left 'mayorIgual_' 'menorIgual_'
 %left 'mayor_' 'menor_' 
+
 
 
 %left 'mas_' 'menos_'
@@ -188,9 +191,13 @@ ARGSINTERFAZ: ARGSINTERFAZ ARGSINTERFAZ1 {
 	| ARGSINTERFAZ1 {
 		$$ = [$1];
 	}
-	|  ERROR SIMBOLOREC  {	
+	|  ERROR SIMBOLORECSENTENCIA1  {	
 		console.log("error de interfaz");	
 		$$ = [];}	 
+	;
+
+SIMBOLORECSENTENCIA1 : puntocoma_ {console.log("salvado por ;");$$ = [];}	
+	| cerrarLlave_ {console.log("salvado por }");$$ = [];}	
 	;
 
 ARGSINTERFAZ1 : DECLARARFUNCION { $$ = $1; }
@@ -206,19 +213,15 @@ ARGUMENTOS : ARGUMENTOS ARGUMENTOS1 {
 	  }
 	|ARGUMENTOS1 {
 		$$ = [$1];
-	}
-	|  ERROR SIMBOLOREC  {		
-		console.log("error de argumentos");
-		$$ = [];}	 
+	}	
 	;
 
-SIMBOLOREC : puntocoma_ 	
-	| cerrarPar_
-	| cerrarCor_
-	| abrirPar_
+	
+SIMBOLOREC : puntocoma_ {console.log("salvado por ;");$$ = [];}	
+	| cerrarLlave_ {console.log("salvado por }");$$ = [];}
+	
+
 	;
-
-
 
 ERROR : error  {console.log(yytext);}
 	;
@@ -238,20 +241,23 @@ MAIN :
 	;
 
 SENTENCIAS :
-	  SENTENCIAS SENTENCIAS_G {
+	SENTENCIAS SENTENCIAS_G {
 		$1.push($2);
 		$$ = $1;
 	  }
 	| SENTENCIAS_G {
 		$$ = [$1];
-	}
-	|  ERROR SIMBOLOREC  {
-		console.log("error de sentencia");		
-		$$ = [];}	 
-	;
+	}	 
 	
+	;
 
-SENTENCIAS_G : 
+	
+SIMBOLORECSENTENCIA : puntocoma_ {console.log("salvado por ;");$$ = [];}	
+	| cerrarLlave_ {console.log("salvado por }");$$ = [];}
+	;
+
+SENTENCIAS_G :
+	
 	DECLARACION		{ $$ = $1; }
 	| ASIGNACION	{ $$ = $1; }
 	//Repeticion
@@ -259,7 +265,7 @@ SENTENCIAS_G :
 	| WHILE			{ $$ = $1; }
 	| DOWHILE		{ $$ = $1; }
 	//Control
-*	| IF			{ $$ = $1; }
+	| IF			{ $$ = $1; }
 	//Otros
 	| BREAK			{ $$ = $1; }
 	| CONTINUE		{ $$ = $1; }
@@ -277,7 +283,29 @@ PRINT: System_ punto_ out_ punto_ print_ abrirPar_ EXPRESION cerrarPar_ puntocom
 	;
 
 LLAMADAMETODO : 
-	identificador_  LISTA_PARAMETROS puntocoma_  { $$ = new LlamadaMetodo($1, $2, this._$.first_line, this._$.first_column); }
+	identificador_ LISTA_PARAMETROS_LLAMADA puntocoma_  { $$ = new LlamadaMetodo($1, $2, this._$.first_line, this._$.first_column); }
+	;
+
+LISTA_PARAMETROS_LLAMADA:
+	 abrirPar_ PARAMETROS1 cerrarPar_	{ $$ = $2; }
+	| abrirPar_ cerrarPar_				{ $$ = [] }	
+	;
+PARAMETROS1 : 	
+	PARAMETROS1 coma_ PARAM1 {
+		$1.push($3);
+		$$ = $1;
+	  }
+	| PARAM1 {
+		$$ = [$1];
+	}		
+	| ERROR SIMBOLOREC { 
+		console.log("error de parametros1");
+		$$ = [] }		
+	;
+
+PARAM1 : 
+	TIPO identificador_		{$$ = new Parametro($1, $2, this._$.first_line, this._$.first_column)}
+	| identificador_	{$$ = new Parametro(null, $1, this._$.first_line, this._$.first_column)}
 	;
 
 JUSTID:
@@ -310,8 +338,20 @@ WHILE :
 	while_ CONDICION BLOQUE_SENTENCIAS	{ $$ = new While($2, $3, this._$.first_line, this._$.first_column); }
 	;
 DOWHILE :
-	do_ BLOQUE_SENTENCIAS  while_ CONDICION puntocoma_ { $$ = new DoWhile($2, $4, this._$.first_line, this._$.first_column); }
+	do_ BLOQUE_SENTENCIAS  DOWHILE2 {		 
+		if($3 != null){
+			console.log($3);
+			$$ = new DoWhile($2, $3, this._$.first_line, this._$.first_column); 
+		} else{
+			$$ = null;
+		}
+	}
+	
 	;
+
+DOWHILE2 : while_ CONDICION puntocoma_ {$$ = $2}	
+	;
+
 
 CONDICION :
 	abrirPar_ EXPRESION cerrarPar_ { $$ = $2; }
@@ -319,11 +359,8 @@ CONDICION :
 
 FOR : 
 	for_ abrirPar_ DECLARACIONASIGNACION  EXPRESION puntocoma_ INCRDCR cerrarPar_ BLOQUE_SENTENCIAS { $$ = new For($3, $4,$6, $8, this._$.first_line, this._$.first_column); }
-	| for_ ERROR cerrarLlave_  {		
-		console.log("error de for ugu");
-		$$ = null;}	
+	;
 
-		;
 BREAK : 
 	break_ puntocoma_ 				{ $$ = new Break($1, this._$.first_line, this._$.first_column)}
 	;
@@ -359,7 +396,9 @@ INCRDCR:
 	;
 BLOQUE_SENTENCIAS : 
 	abrirLlave_ SENTENCIAS cerrarLlave_  { $$ = $2; }
-	| abrirLlave_  cerrarLlave_  { $$ = [] }
+	|abrirLlave_ ERROR SENTENCIAS cerrarLlave_  {console.log("camino 1"); $$ = $3;  }
+	| abrirLlave_  cerrarLlave_  { $$ = []; }
+	| abrirLlave_ ERROR cerrarLlave_ {console.log("camino 2"); $$ = []; }
 	;
 
 FUNCION : 

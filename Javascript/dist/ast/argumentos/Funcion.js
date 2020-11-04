@@ -27,7 +27,6 @@ class Funcion extends sentencia_1.Sentencia {
         }
         cadena += "){\n";
         for (const sent of this.sentencias) {
-            console.log(sent);
             if (sent != null) {
                 cadena += sent.translate();
             }

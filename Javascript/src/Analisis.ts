@@ -6,26 +6,13 @@ import { Token } from './Token';
 
 
 export function AnalizarJava(entrada:string):String{
-    console.log("***********************************")
+    /*console.log("***********************************")
     console.log(entrada);
 
 
-    console.log("***********************************")
-    let codigo = 
-    `
-    public class a{   
-        int b(){
-            
-
-            for(int i = a i <= 10; i++){
-                int a = 0
-                int b = 1;
-                int d = 1;
-                } 
-        }        
-        
-    }
-    `;
+    console.log("***********************************")*/
+    
+   
     /*
 
 a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
@@ -55,17 +42,41 @@ a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
         }
     */
     // Analisis Lexico y Sintactico
+
+    let codigo = `
+    public class Myclase 
+    {
+        
+        String variable , variable1 , variable2;
+        int constante=100/5*5/5+3+2-1*0+1 + 2;
+    
+      
+        void MyMetodo (){
+            metodo_llamada(x);
+            String nombre="myMetodo";
+            int x , y;
+            x=10;
+            y=11;
+            int variable=3+3-5/5*10;
+            System.out.println("myMetodo");
+            System.out.print(x);
+            break;
+        }
+        
+    }
+
+    
+    `
+    ; 
+    
     console.log("\n\n---------------- INICIO ----------------\n");
     let ast = Gramatica.parse(codigo) as AST;
-    let lt = new ListaToken();
-    console.log("\n\n----------------  ----------------\n");
 
+    //Listado de Token analizados
+    let lt = new ListaToken();    
     lt.imprimir();
     
-
-    //Generacion de grafo
-
-    
+    //Traduccion
     let nuevoCodigo = ast.translate();
     console.log("\n\n---------------- TRADUCCION ----------------\n");
     console.log(nuevoCodigo);
