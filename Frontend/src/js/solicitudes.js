@@ -23,7 +23,7 @@ function Analizar(){
         .height(900)
         .fit(true)
         .renderDot(response[1].grafo);
-        //var win = window.open("./jstree/index.html?id="+response,'_blank');
+      
         
     });
 
