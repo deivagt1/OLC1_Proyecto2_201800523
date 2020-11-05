@@ -1,3 +1,8 @@
+
+var traduccion;
+var tokens;
+var errores;
+
 function Analizar(){
     var codigo1 = document.getElementById("textoEntrada").value;
     
@@ -15,17 +20,86 @@ function Analizar(){
         alert(error);
     })
     .then(function(response) {
-        console.log(response[0].analisis);
-        document.getElementById("textoSalida").value = response[0].analisis;
+      //let a = [{'analisis': nuevoCodigo}, {'grafo':textoDot},{'tokens': listadodeTokens}, {'errores': listadodeErrores }]
+        document.getElementById("textoSalida").value = response[3].errores;
+        traduccion = response[0].analisis;
+        tokens = response[2].tokens;
+        errores = response[3].errores;
 
         d3.select("#graph").graphviz()
         .width(window.width - 25)
         .height(900)
         .fit(true)
         .renderDot(response[1].grafo);
+     
       
         
     });
 
+}
+
+
+function descargarTokens() {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(tokens));
+  element.setAttribute('download', "listadoTokens.txt");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  document.body.removeChild(element);
+}
+
+function descargarErrores() {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(errores));
+  element.setAttribute('download', "listadoErrores.txt");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  document.body.removeChild(element);
+}
+
+function descargarTraduccion() {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(traduccion));
+  element.setAttribute('download', "TraduccionJS.js");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function descargarTraduccion() {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(traduccion));
+  element.setAttribute('download', "TraduccionJS.js");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function guardar() {
+  var entradaActual =  document.getElementById("textoEntrada").value;
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(entradaActual));
+  element.setAttribute('download', "guardado.java");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }
 

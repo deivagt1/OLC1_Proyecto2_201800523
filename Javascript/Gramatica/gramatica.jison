@@ -51,75 +51,75 @@
 "//".*				{}
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]		{}
 
-"String"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"String", yytext));return 'String_'; %}
-"int"               %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"int", yytext));return 'int_'; %}
-"boolean"           %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"boolean", yytext));return 'boolean_'; %}
-"double"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"double", yytext));return 'double_'; %}
-"char"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"char", yytext));return 'char_'; %}
-"void"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"void", yytext));return 'void_'; %}
-"public"			%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"public", yytext));return 'public_'; %}
-"static"			%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"static", yytext));return 'static_'; %}
-"main"			    %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"main", yytext));return 'main_'; %}
-"args"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"args", yytext));return 'args_'; %}
-"class"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"class", yytext));return 'class_'; %}
-"interface"			%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"interface", yytext));return 'interface_'; %}
-"do"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"do", yytext));return 'do_'; %}
-"while"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"while", yytext));return 'while_'; %}
-"for"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"for", yytext));return 'for_'; %}
-"if"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"if", yytext));return 'if_'; %}
-"else"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"else", yytext));return 'else_'; %}
-"break"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"break", yytext));return 'break_'; %}
-"continue"          %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"continue", yytext));return 'continue_'; %}
-"return"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"return", yytext));return 'return_'; %}
-"System"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"System", yytext));return 'System_'; %}
-"out"               %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"out", yytext));return 'out_'; %}
-"print"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"print", yytext));return 'print_'; %}
-"println"           %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"println", yytext));return 'println_'; %}
-[0-9]+"."[0-9]+		%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"decimal", yytext));return 'decimal_'; %}
-[0-9]+				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"numero", yytext));return 'numero_'; %}
-\"[^\"]*\"		    %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cadena", yytext ));return 'cadena_'; %}
-"true"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"true", yytext));return 'true_'; %}
-"false"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"false", yytext));return 'false_'; %}
-"null"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"null", yytext));return 'null_'; %}
+"String"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"String", yytext));return 'String_'; %}
+"int"               %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"int", yytext));return 'int_'; %}
+"boolean"           %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"boolean", yytext));return 'boolean_'; %}
+"double"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"double", yytext));return 'double_'; %}
+"char"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"char", yytext));return 'char_'; %}
+"void"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"void", yytext));return 'void_'; %}
+"public"			%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"public", yytext));return 'public_'; %}
+"static"			%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"static", yytext));return 'static_'; %}
+"main"			    %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"main", yytext));return 'main_'; %}
+"args"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"args", yytext));return 'args_'; %}
+"class"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"class", yytext));return 'class_'; %}
+"interface"			%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"interface", yytext));return 'interface_'; %}
+"do"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"do", yytext));return 'do_'; %}
+"while"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"while", yytext));return 'while_'; %}
+"for"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"for", yytext));return 'for_'; %}
+"if"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"if", yytext));return 'if_'; %}
+"else"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"else", yytext));return 'else_'; %}
+"break"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"break", yytext));return 'break_'; %}
+"continue"          %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"continue", yytext));return 'continue_'; %}
+"return"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"return", yytext));return 'return_'; %}
+"System"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"System", yytext));return 'System_'; %}
+"out"               %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"out", yytext));return 'out_'; %}
+"print"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"print", yytext));return 'print_'; %}
+"println"           %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"println", yytext));return 'println_'; %}
+[0-9]+"."[0-9]+		%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"decimal", yytext));return 'decimal_'; %}
+[0-9]+				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"numero", yytext));return 'numero_'; %}
+\"[^\"]*\"		    %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"cadena", yytext ));return 'cadena_'; %}
+"true"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"true", yytext));return 'true_'; %}
+"false"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"false", yytext));return 'false_'; %}
+"null"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"null", yytext));return 'null_'; %}
 
-([a-zA-Z_])[a-zA-Z0-9_]*		%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"identificador", yytext));return 'identificador_'; %}
+([a-zA-Z_])[a-zA-Z0-9_]*		%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"identificador", yytext));return 'identificador_'; %}
 
-"{"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"abrirLlave", yytext));return 'abrirLlave_'; %}
-"}"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cerrarLlave", yytext));return 'cerrarLlave_'; %}
-"("                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"abrirPar", yytext));return 'abrirPar_'; %}
-")"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cerrarPar", yytext));return 'cerrarPar_'; %}
-"["                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"abrirCor", yytext));return 'abrirCor_'; %}
-"]"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cerrarCor", yytext));return 'cerrarCor_'; %}
+"{"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"abrirLlave", yytext));return 'abrirLlave_'; %}
+"}"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"cerrarLlave", yytext));return 'cerrarLlave_'; %}
+"("                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"abrirPar", yytext));return 'abrirPar_'; %}
+")"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"cerrarPar", yytext));return 'cerrarPar_'; %}
+"["                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"abrirCor", yytext));return 'abrirCor_'; %}
+"]"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"cerrarCor", yytext));return 'cerrarCor_'; %}
 
-","                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"coma", yytext));return 'coma_'; %}
-";"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"puntocoma", yytext));return 'puntocoma_'; %}
+","                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"coma", yytext));return 'coma_'; %}
+";"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"puntocoma", yytext));return 'puntocoma_'; %}
 
-"++"                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"incremento", yytext));return 'incremento_'; %}
-"--"                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"decremento", yytext));return 'decremento_'; %}
-"+"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"mas", yytext));return 'mas_'; %}
-"-"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"menos", yytext));return 'menos_'; %}
-"*"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"por", yytext));return 'por_'; %}
-"/"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"division", yytext));return 'division_'; %}
-">="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"mayorIgual", yytext));return 'mayorIgual_'; %}
-"<="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"menorIgual", yytext));return 'menorIgual_'; %}
-">"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"mayor", yytext));return 'mayor_'; %}
-"<"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"menor", yytext));return 'menor_'; %}
-"=="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"dosIgual", yytext));return 'dosIgual_'; %}
-"="                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"igual", yytext));return 'igual_'; %}
-"!="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"distinto", yytext));return 'distinto_'; %}
-"||"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"or", yytext));return 'or_'; %}
-"&&"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"and", yytext));return 'and_'; %}
-"!"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"not", yytext));return 'not_'; %}
-"^"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"xor", yytext));return 'xor_'; %}
-"."                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"punto", yytext));return 'punto_'; %}
+"++"                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"incremento", yytext));return 'incremento_'; %}
+"--"                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"decremento", yytext));return 'decremento_'; %}
+"+"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"mas", yytext));return 'mas_'; %}
+"-"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"menos", yytext));return 'menos_'; %}
+"*"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"por", yytext));return 'por_'; %}
+"/"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"division", yytext));return 'division_'; %}
+">="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"mayorIgual", yytext));return 'mayorIgual_'; %}
+"<="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"menorIgual", yytext));return 'menorIgual_'; %}
+">"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"mayor", yytext));return 'mayor_'; %}
+"<"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"menor", yytext));return 'menor_'; %}
+"=="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"dosIgual", yytext));return 'dosIgual_'; %}
+"="                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"igual", yytext));return 'igual_'; %}
+"!="                %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"distinto", yytext));return 'distinto_'; %}
+"||"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"or", yytext));return 'or_'; %}
+"&&"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"and", yytext));return 'and_'; %}
+"!"					%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"not", yytext));return 'not_'; %}
+"^"                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"xor", yytext));return 'xor_'; %}
+"."                 %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"punto", yytext));return 'punto_'; %}
 
 [ \r\t]+			{}
 \n					{}
 <<EOF>>				return 'EOF';
 .	{ 
 		
-		console.error('Error léxico: ' + yytext + ', line: ' + yylloc.first_line + ', column: ' + yylloc.first_column);
-		ListaToken.errorTokens.push(new Token(yylloc.first_line,yylloc.first_column,"Lexico", 'El caracter "' + yytext + '" no pertenece al lenguaje.'));  
+		console.error('Error léxico: ' + yytext + ', line: ' + yylloc.first_line + ', column: ' + yylloc.first_column+1);
+		ListaToken.errorTokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"Lexico", 'El caracter "' + yytext + '" no pertenece al lenguaje.'));  
 	}
 
 /lex

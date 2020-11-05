@@ -23,6 +23,7 @@ export function AnalizarJava(entrada:string){
     let le = new ListaErrores();
     console.log("\n\n---------------- ERRORES ----------------\n");
     let listadodeErrores= le.generar();
+    console.log(listadodeErrores);
     
     //Traduccion
     let nuevoCodigo = ast.translate();

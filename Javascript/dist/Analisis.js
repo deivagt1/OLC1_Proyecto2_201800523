@@ -17,6 +17,7 @@ function AnalizarJava(entrada) {
     let le = new ListaToken_1.ListaErrores();
     console.log("\n\n---------------- ERRORES ----------------\n");
     let listadodeErrores = le.generar();
+    console.log(listadodeErrores);
     //Traduccion
     let nuevoCodigo = ast.translate();
     console.log("\n\n---------------- TRADUCCION ----------------\n");
