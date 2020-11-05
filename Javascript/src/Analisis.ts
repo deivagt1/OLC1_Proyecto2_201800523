@@ -1,80 +1,28 @@
 import Gramatica = require('../Gramatica/gramatica');
 import { AST } from "./ast/AST";
 import { GrafoAST } from "./ast/grafo/GrafoAST";
-import { ListaToken, tokens } from './ListaToken';
+import { ListaErrores, ListaToken, tokens, errorTokens } from './ListaToken';
 import { Token } from './Token';
 
+export function AnalizarJava(entrada:string){
 
-export function AnalizarJava(entrada:string):String{
-    /*console.log("***********************************")
-    console.log(entrada);
+    tokens.splice(0,tokens.length);
+	errorTokens.splice(0,errorTokens.length);
 
 
-    console.log("***********************************")*/
-    
-   
-    /*
+    let codigo = entrada; 
 
-a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
 
-    int a (String b, int abc){
-        int a,b = 55, c = "abc"; 
-
-        for(int i = 0; i < 10; i++){
-            int f = 10;     
-        }
-    }
-
-    int a (String b, int abc){
-        int a=0.0;  
-    }
-
-    public static void main(String[] args){
-        int a=0.0;
-    }
-     while(true){ 
-            a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
-           
-        }
-
-         public static void main(String[] args){
-            int a=0.0;
-        }
-    */
-    // Analisis Lexico y Sintactico
-
-    let codigo = `
-    public class Myclase 
-    {
-        
-        String variable , variable1 , variable2;
-        int constante=100/5*5/5+3+2-1*0+1 + 2;
-    
-      
-        void MyMetodo (){
-            metodo_llamada(x);
-            String nombre="myMetodo";
-            int x , y;
-            x=10;
-            y=11;
-            int variable=3+3-5/5*10;
-            System.out.println("myMetodo");
-            System.out.print(x);
-            break;
-        }
-        
-    }
-
-    
-    `
-    ; 
-    
     console.log("\n\n---------------- INICIO ----------------\n");
     let ast = Gramatica.parse(codigo) as AST;
 
     //Listado de Token analizados
-    let lt = new ListaToken();    
-    lt.imprimir();
+    let lt = new ListaToken();
+    console.log("\n\n---------------- TOKENS ----------------\n");    
+    let listadodeTokens = lt.generar();
+    let le = new ListaErrores();
+    console.log("\n\n---------------- ERRORES ----------------\n");
+    let listadodeErrores= le.generar();
     
     //Traduccion
     let nuevoCodigo = ast.translate();
@@ -84,9 +32,12 @@ a = "hola"+":)"+59.5*12.2+(10.9*12.12-56.56/0.1);
     
     //Inicia la generacion del grafo
     let grafoAST = new GrafoAST(ast);
-    let txtDotAST = grafoAST.getGrafo()
+    let textoDot = grafoAST.getGrafo()
     //console.log("\n\n------------------- GRAFO -------------------\n");
-    console.log(txtDotAST);
+    console.log(textoDot);
+
     //console.log("\n--------------------------------------------\n");
-    return nuevoCodigo;
+    let a = [{'analisis': nuevoCodigo}, {'grafo':textoDot},{'tokens': listadodeTokens}, {'errores': listadodeErrores }]
+    return a;
 }
+

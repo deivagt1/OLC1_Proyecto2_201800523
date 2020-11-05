@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.analizar = void 0;
+const Analisis_1 = require("./Analisis");
 exports.analizar = (req, res) => {
-    let codigo = req.query.codigo;
-    console.log(req.query);
-    console.log(req.body);
-    let respuesta = "AnalizarJava(codigo)";
-    let a = [{ 'analisis': respuesta }, { 'grafo': 'reporteAST' }, { 'errores': 'reporteErrores' }];
+    let codigo = req.body.codigo;
+    let a = Analisis_1.AnalizarJava(codigo);
     res.send(a);
 };

@@ -35,7 +35,7 @@
 
 	const ListaToken =require( "../dist/ListaToken");
 	const { Token } = require("../dist/Token");
-
+	
 	
 
 
@@ -74,10 +74,10 @@
 "System"            %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"System", yytext));return 'System_'; %}
 "out"               %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"out", yytext));return 'out_'; %}
 "print"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"print", yytext));return 'print_'; %}
-"println"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"println", yytext));return 'println_'; %}
+"println"           %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"println", yytext));return 'println_'; %}
 [0-9]+"."[0-9]+		%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"decimal", yytext));return 'decimal_'; %}
 [0-9]+				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"numero", yytext));return 'numero_'; %}
-\"[^\"]*\"		    %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cadena", yytext));return 'cadena_'; %}/*//"*/
+\"[^\"]*\"		    %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"cadena", yytext ));return 'cadena_'; %}
 "true"              %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"true", yytext));return 'true_'; %}
 "false"             %{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"false", yytext));return 'false_'; %}
 "null"				%{ListaToken.tokens.push(new Token(yylloc.first_line,yylloc.first_column,"null", yytext));return 'null_'; %}
@@ -118,7 +118,8 @@
 <<EOF>>				return 'EOF';
 .	{ 
 		
-		console.error('Error léxico: ' + yytext + ', line: ' + yylloc.first_line + ', column: ' + yylloc.first_column); 
+		console.error('Error léxico: ' + yytext + ', line: ' + yylloc.first_line + ', column: ' + yylloc.first_column);
+		ListaToken.errorTokens.push(new Token(yylloc.first_line,yylloc.first_column,"Lexico", 'El caracter "' + yytext + '" no pertenece al lenguaje.'));  
 	}
 
 /lex
@@ -171,18 +172,15 @@ LISTA_CLASES :
 	;
 
 CLASE : 
-	public_ class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 			{ $$ = new Clase($3, $5, true,0, this._$.first_line, this._$.first_column ); }
-	;
-
-	/* 
-	| public_ class_ identificador_ abrirLlave_  cerrarLlave_					{ $$ = new Clase($3, [], true,0, this._$.first_line, this._$.first_column ); }
-	| class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 				{ $$ = new Clase($2, $4, true,1, this._$.first_line, this._$.first_column ); }
+	 public_ class_ identificador_ abrirLlave_  cerrarLlave_					{ $$ = new Clase($3, [], true,0, this._$.first_line, this._$.first_column ); }
 	| class_ identificador_ abrirLlave_  cerrarLlave_ 							{ $$ = new Clase($2, [], true,1, this._$.first_line, this._$.first_column ); }
-	| public_ interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 	{ $$ = new Clase($3, $5, false,2, this._$.first_line, this._$.first_column ); }
-	| public_ interface_ identificador_ abrirLlave_  cerrarLlave_	 			{ $$ = new Clase($3, [], false,2, this._$.first_line, this._$.first_column ); }
-	| interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 			{ $$ = new Clase($2, $4, false,3, this._$.first_line, this._$.first_column ); }
 	| interface_ identificador_ abrirLlave_  cerrarLlave_ 						{ $$ = new Clase($2, [], false,3, this._$.first_line, this._$.first_column ); }
-	*/ 
+	| public_ interface_ identificador_ abrirLlave_  cerrarLlave_	 			{ $$ = new Clase($3, [], false,2, this._$.first_line, this._$.first_column ); }	
+	| public_ class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 		{ $$ = new Clase($3, $5, true,0, this._$.first_line, this._$.first_column ); }
+	| class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 				{ $$ = new Clase($2, $4, true,1, this._$.first_line, this._$.first_column ); }	
+	| public_ interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 	{ $$ = new Clase($3, $5, false,2, this._$.first_line, this._$.first_column ); }
+	| interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 			{ $$ = new Clase($2, $4, false,3, this._$.first_line, this._$.first_column ); }
+	;
 
 ARGSINTERFAZ: ARGSINTERFAZ ARGSINTERFAZ1 {
 		$1.push($2);
@@ -207,7 +205,7 @@ ARGSINTERFAZ1 : DECLARARFUNCION { $$ = $1; }
 
 
 ARGUMENTOS : ARGUMENTOS ARGUMENTOS1 {
-	console.log(1);
+	
 		$1.push($2);
 		$$ = $1;
 	  }
@@ -223,7 +221,7 @@ SIMBOLOREC : puntocoma_ {console.log("salvado por ;");$$ = [];}
 
 	;
 
-ERROR : error  {console.log(yytext);}
+ERROR : error  {console.log(yytext);ListaToken.errorTokens.push(new Token(this._$.first_line,this._$.first_column,"Sintanctico", 'Se encontró "' + yytext + '" y se esperaba ";".'  ));  }
 	;
 
 ARGUMENTOS1:
@@ -394,15 +392,19 @@ INCRDCR:
 	 JUSTID incremento_ 	{ $$ = new OperacionAritmetica( TipoDeOperacion.INCREMENTO, $1, null, this._$.first_line, this._$.first_column); }
 	| JUSTID decremento_ 	{ $$ = new OperacionAritmetica( TipoDeOperacion.DECREMENTO, $1, null, this._$.first_line, this._$.first_column); }
 	;
-BLOQUE_SENTENCIAS : 
-	abrirLlave_ SENTENCIAS cerrarLlave_  { $$ = $2; }
-	|abrirLlave_ ERROR SENTENCIAS cerrarLlave_  {console.log("camino 1"); $$ = $3;  }
-	| abrirLlave_  cerrarLlave_  { $$ = []; }
+BLOQUE_SENTENCIAS :
+	 abrirLlave_  cerrarLlave_  { $$ = []; } 
 	| abrirLlave_ ERROR cerrarLlave_ {console.log("camino 2"); $$ = []; }
+	| abrirLlave_ SENTENCIAS cerrarLlave_  { $$ = $2; }
+	| abrirLlave_ ERROR SENTENCIAS cerrarLlave_  {console.log("camino 1"); $$ = $3;  }
+
 	;
 
 FUNCION : 
-	void_ identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion(Tipo.VOID, $2, $3, $4, this._$.first_line, this._$.first_column); }
+	public_ void_ identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion(Tipo.VOID, $3, $4, $5, this._$.first_line, this._$.first_column); }
+	| public_  TIPO identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion($2, $3, $4, $5, this._$.first_line, this._$.first_column); }
+	| public_ DECLARARFUNCION {$$ = $1}
+	| void_ identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion(Tipo.VOID, $2, $3, $4, this._$.first_line, this._$.first_column); }
 	| TIPO identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion($1, $2, $3, $4, this._$.first_line, this._$.first_column); }
 	| DECLARARFUNCION {$$ = $1}
 	;
@@ -412,8 +414,9 @@ DECLARARFUNCION : void_ identificador_  LISTA_PARAMETROS  puntocoma_ { $$ = new 
 	;
 
 LISTA_PARAMETROS : 
-	 abrirPar_ PARAMETROS cerrarPar_	{ $$ = $2; }
-	| abrirPar_ cerrarPar_				{ $$ = [] }
+	abrirPar_ cerrarPar_				{ $$ = [] }
+	| abrirPar_ PARAMETROS cerrarPar_	{ $$ = $2; }
+	
 	;
 
 PARAMETROS : 	
@@ -466,12 +469,12 @@ EXPRESION :
 	;
 
 PRIMITIVO : 
-  	decimal_		{ $$ = new Primitivo( $1, this._$.first_line, this._$.first_column); }
-	| numero_		{ $$ = new Primitivo( $1, this._$.first_line, this._$.first_column); }
-	| cadena_		{ $$ = new Primitivo( $1, this._$.first_line, this._$.first_column); }
-	| true_			{ $$ = new Primitivo( true, this._$.first_line, this._$.first_column); }
-	| false_		{ $$ = new Primitivo( false, this._$.first_line, this._$.first_column); }
-	| identificador_ { $$ = new Identificador( $1, this._$.first_line, this._$.first_column); }
-	| null_ { $$ = new Identificador( null, this._$.first_line, this._$.first_column); }
+  	decimal_		{ $$ = new Primitivo(0, $1, this._$.first_line, this._$.first_column); }
+	| numero_		{ $$ = new Primitivo(0, $1, this._$.first_line, this._$.first_column); }
+	| cadena_		{ $$ = new Primitivo(1, $1, this._$.first_line, this._$.first_column); }
+	| true_			{ $$ = new Primitivo(0, true, this._$.first_line, this._$.first_column); }
+	| false_		{ $$ = new Primitivo(0, false, this._$.first_line, this._$.first_column); }
+	| identificador_ { $$ = new Identificador(0, $1, this._$.first_line, this._$.first_column); }
+	| null_ { $$ = new Identificador(0, null, this._$.first_line, this._$.first_column); }
 	;
 

@@ -1,29 +1,69 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" type="text/css" href="css/menu.css">
-   
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 
+
 <body>
-<ul id="menu" class="menu">
-    <li class="dropdown">
-        <a class="linkarchivo"  class="dropbtn">Archivo</a>
-        <div class="dropdown-content">
-            <a id="analizar" class="analizar" onclick="Analizar()">Analizar</a>
-        
+
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
+                <li class="nav-item active ">
+                    <a class="nav-link" href="#" onclick="Analizar()">Analizar </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+
+        </nav>
+    </div>
+    <title>Proyecto 2 - 201800523</title>
+
+    <form style="margin:5%;">
+
+        <legend>Entrada</legend>
+        <div class="form-group">
+            <textarea class="form-control" id="textoEntrada" rows="15" style=" resize:none; "></textarea>
         </div>
+        <legend>Errores JS</legend>
+        <div class="form-group">
+            <textarea class="form-control" id="textoSalida" rows="7" style=" resize:none; "></textarea>
+        </div>
+
+        <div id="graph" style="text-align: center; border:1px solid black;"></div>
+
+
+    </form>
+
+
+
+
+    <!-- SOLICITUDES -->
+    <script src="js/solicitudes.js"></script>
+
+    <!-- Grafo ugu -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
     
-</ul>
-
-<br>
-
-
-
-<!-- SOLICITUDES -->
-<script src="js/solicitudes.js"></script>
+   
 
 
 </body>
+
 </html>
