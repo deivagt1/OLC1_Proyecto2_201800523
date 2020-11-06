@@ -172,13 +172,13 @@ LISTA_CLASES :
 	;
 
 CLASE : 
-	 public_ class_ identificador_ abrirLlave_  cerrarLlave_					{ $$ = new Clase($3, [], true,0, this._$.first_line, this._$.first_column ); }
+	 public_ class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 		{ $$ = new Clase($3, $5, true,0, this._$.first_line, this._$.first_column ); }
+	| public_ class_ identificador_ abrirLlave_  cerrarLlave_					{ $$ = new Clase($3, [], true,0, this._$.first_line, this._$.first_column ); }
+	| public_ interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 	{ $$ = new Clase($3, $5, false,2, this._$.first_line, this._$.first_column ); }
+	| public_ interface_ identificador_ abrirLlave_  cerrarLlave_	 			{ $$ = new Clase($3, [], false,2, this._$.first_line, this._$.first_column ); }	
 	| class_ identificador_ abrirLlave_  cerrarLlave_ 							{ $$ = new Clase($2, [], true,1, this._$.first_line, this._$.first_column ); }
 	| interface_ identificador_ abrirLlave_  cerrarLlave_ 						{ $$ = new Clase($2, [], false,3, this._$.first_line, this._$.first_column ); }
-	| public_ interface_ identificador_ abrirLlave_  cerrarLlave_	 			{ $$ = new Clase($3, [], false,2, this._$.first_line, this._$.first_column ); }	
-	| public_ class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 		{ $$ = new Clase($3, $5, true,0, this._$.first_line, this._$.first_column ); }
-	| class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 				{ $$ = new Clase($2, $4, true,1, this._$.first_line, this._$.first_column ); }	
-	| public_ interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 	{ $$ = new Clase($3, $5, false,2, this._$.first_line, this._$.first_column ); }
+	| class_ identificador_ abrirLlave_  ARGUMENTOS cerrarLlave_ 				{ $$ = new Clase($2, $4, true,1, this._$.first_line, this._$.first_column ); }
 	| interface_ identificador_ abrirLlave_ ARGSINTERFAZ cerrarLlave_ 			{ $$ = new Clase($2, $4, false,3, this._$.first_line, this._$.first_column ); }
 	;
 
@@ -198,14 +198,15 @@ SIMBOLORECSENTENCIA1 : puntocoma_ {console.log("salvado por ;");$$ = [];}
 	| cerrarLlave_ {console.log("salvado por }");$$ = [];}	
 	;
 
-ARGSINTERFAZ1 : DECLARARFUNCION { $$ = $1; }
+ARGSINTERFAZ1 :
+	public_ DECLARARFUNCION { $$ = $2; }
+	| DECLARARFUNCION { $$ = $1; }
 	| DECLARACION				{ $$ = $1; }
 	;
 
 
 
-ARGUMENTOS : ARGUMENTOS ARGUMENTOS1 {
-	
+ARGUMENTOS : ARGUMENTOS ARGUMENTOS1 {	
 		$1.push($2);
 		$$ = $1;
 	  }
@@ -335,6 +336,7 @@ ASIGNACION :
 WHILE : 
 	while_ CONDICION BLOQUE_SENTENCIAS	{ $$ = new While($2, $3, this._$.first_line, this._$.first_column); }
 	;
+
 DOWHILE :
 	do_ BLOQUE_SENTENCIAS  DOWHILE2 {		 
 		if($3 != null){
@@ -343,8 +345,7 @@ DOWHILE :
 		} else{
 			$$ = null;
 		}
-	}
-	
+	}	
 	;
 
 DOWHILE2 : while_ CONDICION puntocoma_ {$$ = $2}	
@@ -403,15 +404,19 @@ BLOQUE_SENTENCIAS :
 FUNCION : 
 	public_ void_ identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion(Tipo.VOID, $3, $4, $5, this._$.first_line, this._$.first_column); }
 	| public_  TIPO identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion($2, $3, $4, $5, this._$.first_line, this._$.first_column); }
-	| public_ DECLARARFUNCION {$$ = $1}
+	| public_ DECLARARFUNCION {$$ = $2}
 	| void_ identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion(Tipo.VOID, $2, $3, $4, this._$.first_line, this._$.first_column); }
 	| TIPO identificador_  LISTA_PARAMETROS BLOQUE_SENTENCIAS	{ $$ = new Funcion($1, $2, $3, $4, this._$.first_line, this._$.first_column); }
 	| DECLARARFUNCION {$$ = $1}
 	;
 
-DECLARARFUNCION : void_ identificador_  LISTA_PARAMETROS  puntocoma_ { $$ = new DeclFuncion(Tipo.VOID, $2, $3, this._$.first_line, this._$.first_column); }
+DECLARARFUNCION : 
+	 void_ identificador_  LISTA_PARAMETROS  puntocoma_ { $$ = new DeclFuncion(Tipo.VOID, $2, $3, this._$.first_line, this._$.first_column); }
 	| TIPO identificador_  LISTA_PARAMETROS puntocoma_ { $$ = new DeclFuncion($1, $2, $3, this._$.first_line, this._$.first_column); }
+	
 	;
+
+
 
 LISTA_PARAMETROS : 
 	abrirPar_ cerrarPar_				{ $$ = [] }

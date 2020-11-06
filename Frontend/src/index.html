@@ -26,6 +26,9 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" onclick="Analizar()"> Analizar </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" aria-haspopup="true" aria-expanded="false"
+                        id="botonAbrir">Abrir</button>                    
                     <a class="dropdown-item" href="#" onclick="guardar()">Guardar</a>
                 </div>
             </div>
@@ -44,8 +47,6 @@
                     <div class="dropdown-divider"></div>
                 </div>
             </div>
-
-
 
 
         </nav>
@@ -70,16 +71,22 @@
 
     </form>
 
-
-
-
+    <input id="archivoEntrada" type="file" accept=".java" style="display: none;" />
     <!-- SOLICITUDES -->
     <script src="js/solicitudes.js"></script>
+    <script src="js/abrirArchivo.js"></script>
+    <script>
+        $('#botonAbrir').on('click', function () {
+            $('#archivoEntrada').trigger('click');
+        });
+    </script>
+ 
 
     <!-- Grafo ugu -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
     <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+
 
 
 
