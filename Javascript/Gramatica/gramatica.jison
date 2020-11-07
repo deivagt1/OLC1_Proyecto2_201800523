@@ -248,7 +248,8 @@ SENTENCIAS :
 	  }
 	| SENTENCIAS_G {
 		$$ = [$1];
-	}	 
+	}	
+	
 	
 	;
 
