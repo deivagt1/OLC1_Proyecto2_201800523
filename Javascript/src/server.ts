@@ -2,10 +2,10 @@ import express = require('express');
 import * as cors from 'cors';
 import * as controller from './control';
 
-//Creamos una nueva instancia para nuestra aplicacion
+
 const app =  express();
 
-//configuraciones
+
 app.set('port',3000);
 
 app.use((req, res, next) => {
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     next();
 });
 
-//middlewares
+
 app.use(cors());
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());

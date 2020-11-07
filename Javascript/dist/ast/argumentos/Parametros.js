@@ -20,7 +20,6 @@ class Parametros extends sentencia_1.Sentencia {
     }
     generarGrafo(g, padre) {
         let p = padre;
-        //----------- LISTA DE PARAMETROS -----------
         let nombreHijo = "nodo" + g.contador;
         for (let x = 0; x < this.parametros.length; x++) {
             let par = this.parametros[x];
@@ -30,7 +29,6 @@ class Parametros extends sentencia_1.Sentencia {
             g.contador++;
             par.generarGrafo(g, nombreHijo);
         }
-        //----------------------------------------------
         return null;
     }
     getNombreHijo() {

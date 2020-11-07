@@ -30,7 +30,7 @@ export class OperacionAritmetica extends Sentencia {
             case TipoDeOperacion.DECREMENTO:
                 return this.operador1.translate() + "--;\n";
             case TipoDeOperacion.NEGATIVO:
-                return this.operador1.translate() + "-";
+                return "-" + this.operador1.translate() ;
             
             
         }

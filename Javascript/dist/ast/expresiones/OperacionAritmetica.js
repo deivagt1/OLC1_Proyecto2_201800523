@@ -25,7 +25,7 @@ class OperacionAritmetica extends sentencia_1.Sentencia {
             case Tipo_1.TipoDeOperacion.DECREMENTO:
                 return this.operador1.translate() + "--;\n";
             case Tipo_1.TipoDeOperacion.NEGATIVO:
-                return this.operador1.translate() + "-";
+                return "-" + this.operador1.translate();
         }
         return "";
     }

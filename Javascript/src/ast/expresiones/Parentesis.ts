@@ -3,13 +3,7 @@ import { ValorGrafo } from "../grafo/ValorGrafo";
 
 export class Parentesis extends Sentencia {
     expresion:Sentencia;
- 
-    /**
-     * @class 
-     * @param line
-     * @param column
-     * @param operador1
-     */
+
     constructor(expresion:Sentencia, line:Number, column:Number){
         super(line,column)
         this.expresion = expresion;  

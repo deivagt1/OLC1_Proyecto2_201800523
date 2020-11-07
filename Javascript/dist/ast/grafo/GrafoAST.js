@@ -7,12 +7,11 @@ class GrafoAST {
         this.arbol = arbol;
     }
     getGrafo() {
-        let grafo = "digraph G{\n\n ";
-        grafo += "  nodo0[label=\"AST\"];\n";
-        var g = new ValorGrafo_1.ValorGrafo(1, grafo);
+        let salida = "digraph G{\n\n ";
+        salida += "  nodo0[label=\"AST\"];\n";
+        var g = new ValorGrafo_1.ValorGrafo(1, salida);
         this.arbol.generarGrafo(g, "nodo0");
         g.salida += "\n}";
-        //console.log(g.grafo);
         return g.salida;
     }
 }

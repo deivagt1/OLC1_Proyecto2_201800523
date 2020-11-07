@@ -6,14 +6,7 @@ export class OperacionRelacional extends Sentencia {
     operador1:Sentencia;
     operador2:Sentencia;
     tipoOperacion:TipoDeOperacion;
-    /**
-     * @class 
-     * @param line
-     * @param column
-     * @param operador1
-     * @param operador2
-     * @param tipoOperacion
-     */
+
     constructor(tipoOperacion:TipoDeOperacion, operador1:Sentencia, operador2:Sentencia, line:Number, column:Number){
         super(line,column)
         this.operador1 = operador1;

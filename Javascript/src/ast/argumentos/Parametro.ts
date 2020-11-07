@@ -6,11 +6,13 @@ export class Parametro extends Sentencia {
     
     identificador: String;
     tipo: Tipo;
+    control:number;
    
-    constructor(tipo:Tipo, identificador:String, line:Number, column:Number){
+    constructor(control:number, tipo:Tipo, identificador:String, line:Number, column:Number){
         super(line,column);
         this.tipo = tipo;
         this.identificador = identificador;
+        this.control = control;
        
     }
 
@@ -44,8 +46,14 @@ export class Parametro extends Sentencia {
         p = nombreHijo;
 
         //Identificador
+
+        let temp = this.identificador.toString();
+        if(this.control == 1){
+            temp = temp.slice(1,-1);
+ 
+        }
         nombreHijo = "nodo" + g.contador;
-        g.salida += "  " + nombreHijo + "[label=\"" + this.identificador + "\"];\n";
+        g.salida += "  " + nombreHijo + "[label=\"" + temp + "\"];\n";
         g.salida += "  " + p + " -> " + nombreHijo + ";\n";
         g.contador++;
        

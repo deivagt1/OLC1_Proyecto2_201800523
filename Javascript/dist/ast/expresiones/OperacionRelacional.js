@@ -4,14 +4,6 @@ exports.OperacionRelacional = void 0;
 const sentencia_1 = require("../sentencia");
 const Tipo_1 = require("../Tipo");
 class OperacionRelacional extends sentencia_1.Sentencia {
-    /**
-     * @class
-     * @param line
-     * @param column
-     * @param operador1
-     * @param operador2
-     * @param tipoOperacion
-     */
     constructor(tipoOperacion, operador1, operador2, line, column) {
         super(line, column);
         this.operador1 = operador1;

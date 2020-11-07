@@ -4,10 +4,11 @@ exports.Parametro = void 0;
 const sentencia_1 = require("../sentencia");
 const Tipo_1 = require("../Tipo");
 class Parametro extends sentencia_1.Sentencia {
-    constructor(tipo, identificador, line, column) {
+    constructor(control, tipo, identificador, line, column) {
         super(line, column);
         this.tipo = tipo;
         this.identificador = identificador;
+        this.control = control;
     }
     translate() {
         let cadena = this.identificador + ", ";
@@ -33,8 +34,12 @@ class Parametro extends sentencia_1.Sentencia {
         g.contador++;
         p = nombreHijo;
         //Identificador
+        let temp = this.identificador.toString();
+        if (this.control == 1) {
+            temp = temp.slice(1, -1);
+        }
         nombreHijo = "nodo" + g.contador;
-        g.salida += "  " + nombreHijo + "[label=\"" + this.identificador + "\"];\n";
+        g.salida += "  " + nombreHijo + "[label=\"" + temp + "\"];\n";
         g.salida += "  " + p + " -> " + nombreHijo + ";\n";
         g.contador++;
         return null;

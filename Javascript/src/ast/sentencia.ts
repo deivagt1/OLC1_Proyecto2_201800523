@@ -10,10 +10,9 @@ export abstract class Sentencia{
         this.column = column;
     }
 
-    // Metodo en el cual se traduce el codigo
     abstract translate():String;
 
-    // Metodos para la generacion del reporte del grafo
+ 
     abstract generarGrafo(g:ValorGrafo, padre:String):any;
     abstract getNombreHijo():String;
     

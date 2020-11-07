@@ -8,14 +8,13 @@ export class GrafoAST{
 
 
     getGrafo():String{
-        let grafo = "digraph G{\n\n ";        
-        grafo += "  nodo0[label=\"AST\"];\n";
-        var g = new ValorGrafo(1, grafo);
+        let salida = "digraph G{\n\n ";        
+        salida += "  nodo0[label=\"AST\"];\n";
+        var g = new ValorGrafo(1, salida);
         this.arbol.generarGrafo(g,"nodo0");
         
-        g.salida += "\n}";
-        
-        //console.log(g.grafo);
+        g.salida += "\n}";        
+   
         return g.salida;
     }
 

@@ -1,6 +1,5 @@
 import { Sentencia } from  "../sentencia"
 import { ValorGrafo } from "../grafo/ValorGrafo";
-import { Tipo } from "../Tipo";
 import {Parametro} from "./Parametro";
 
 export class Parametros extends Sentencia {
@@ -29,8 +28,6 @@ export class Parametros extends Sentencia {
     generarGrafo(g: ValorGrafo, padre: String) {
         let p = padre;
         
-        
-        //----------- LISTA DE PARAMETROS -----------
         let nombreHijo = "nodo"+g.contador;
         
 
@@ -43,7 +40,7 @@ export class Parametros extends Sentencia {
             par.generarGrafo(g,nombreHijo);
         }
 
-        //----------------------------------------------
+
         return null;
     }
     

@@ -117,8 +117,7 @@
 \n					{}
 <<EOF>>				return 'EOF';
 .	{ 
-		
-		console.error('Error léxico: ' + yytext + ', line: ' + yylloc.first_line + ', column: ' + yylloc.first_column+1);
+
 		ListaToken.errorTokens.push(new Token(yylloc.first_line,yylloc.first_column+1,"Lexico", 'El caracter "' + yytext + '" no pertenece al lenguaje.'));  
 	}
 
@@ -212,7 +211,10 @@ ARGUMENTOS : ARGUMENTOS ARGUMENTOS1 {
 	  }
 	|ARGUMENTOS1 {
 		$$ = [$1];
-	}	
+	}
+	| ERROR SIMBOLOREC {	
+		console.log("error de clase");	
+		$$ = [];}		
 	;
 
 	
@@ -303,9 +305,20 @@ PARAMETROS1 :
 	;
 
 PARAM1 : 
-	TIPO identificador_		{$$ = new Parametro($1, $2, this._$.first_line, this._$.first_column)}
-	| identificador_	{$$ = new Parametro(null, $1, this._$.first_line, this._$.first_column)}
+	TIPO identificador_		{$$ = new Parametro($1, $2, this._$.first_line, this._$.first_column)}	
+	| PRIMITIVO1	{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
 	;
+
+PRIMITIVO1 : 
+  	decimal_		{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
+	| numero_		{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
+	| cadena_		{$$ = new Parametro(1,null, $1, this._$.first_line, this._$.first_column)}
+	| true_			{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
+	| identificador_	{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
+	| false_		{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
+	| null_ 		{$$ = new Parametro(0,null, $1, this._$.first_line, this._$.first_column)}
+	;
+
 
 JUSTID:
 	identificador_ { $$ = new Identificador( $1, this._$.first_line, this._$.first_column); }
@@ -479,7 +492,7 @@ PRIMITIVO :
 	| cadena_		{ $$ = new Primitivo(1, $1, this._$.first_line, this._$.first_column); }
 	| true_			{ $$ = new Primitivo(0, true, this._$.first_line, this._$.first_column); }
 	| false_		{ $$ = new Primitivo(0, false, this._$.first_line, this._$.first_column); }
-	| identificador_ { $$ = new Identificador(0, $1, this._$.first_line, this._$.first_column); }
-	| null_ { $$ = new Identificador(0, null, this._$.first_line, this._$.first_column); }
+	| identificador_ { $$ = new Primitivo(0, $1, this._$.first_line, this._$.first_column); }
+	| null_ { $$ = new Primitivo(0, null, this._$.first_line, this._$.first_column); }
 	;
 

@@ -1,15 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TipoDeOperacion = exports.Tipo = void 0;
-var Tipo;
-(function (Tipo) {
-    Tipo[Tipo["INT"] = 0] = "INT";
-    Tipo[Tipo["BOOLEAN"] = 1] = "BOOLEAN";
-    Tipo[Tipo["DOUBLE"] = 2] = "DOUBLE";
-    Tipo[Tipo["STRING"] = 3] = "STRING";
-    Tipo[Tipo["CHAR"] = 4] = "CHAR";
-    Tipo[Tipo["VOID"] = 5] = "VOID";
-})(Tipo = exports.Tipo || (exports.Tipo = {}));
+exports.Tipo = exports.TipoDeOperacion = void 0;
 var TipoDeOperacion;
 (function (TipoDeOperacion) {
     TipoDeOperacion[TipoDeOperacion["SUMA"] = 0] = "SUMA";
@@ -31,3 +22,12 @@ var TipoDeOperacion;
     TipoDeOperacion[TipoDeOperacion["XOR"] = 16] = "XOR";
     TipoDeOperacion[TipoDeOperacion["NEGATIVO"] = 17] = "NEGATIVO";
 })(TipoDeOperacion = exports.TipoDeOperacion || (exports.TipoDeOperacion = {}));
+var Tipo;
+(function (Tipo) {
+    Tipo[Tipo["INT"] = 0] = "INT";
+    Tipo[Tipo["BOOLEAN"] = 1] = "BOOLEAN";
+    Tipo[Tipo["DOUBLE"] = 2] = "DOUBLE";
+    Tipo[Tipo["STRING"] = 3] = "STRING";
+    Tipo[Tipo["CHAR"] = 4] = "CHAR";
+    Tipo[Tipo["VOID"] = 5] = "VOID";
+})(Tipo = exports.Tipo || (exports.Tipo = {}));
