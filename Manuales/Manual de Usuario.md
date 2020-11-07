@@ -1,5 +1,5 @@
 ﻿# Manual de Usuario
-![Interfaz](https://photos.google.com/share/AF1QipOgvJXdmou7D3dyPj8L7kfjdcqfjLEIUpvSmphHkx2JDI0wchyzFzFZo4hC13iJPg?key=NUNvZnM5VGxnOXdOM3F6MnpySVRzYWhiXzZZRzZn)
+![Interfaz](/img/Screenshot 2020-11-06 201710.png)
 ## Usos del Traductor
 
  - Abrir un archivo

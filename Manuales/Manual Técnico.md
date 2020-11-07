@@ -21,7 +21,7 @@ Lenguaje: Typescript (Traducido a JavaScript)
 Librerias: cors, express, jison, typescript, util
 
 ## Interfaz de usuario
-![Interfaz](https://photos.google.com/share/AF1QipOgvJXdmou7D3dyPj8L7kfjdcqfjLEIUpvSmphHkx2JDI0wchyzFzFZo4hC13iJPg?key=NUNvZnM5VGxnOXdOM3F6MnpySVRzYWhiXzZZRzZn)
+![Interfaz](/img/Screenshot 2020-11-06 201710.png)
 
 La interfaz posee una barra de navegacion con dos botones principales, **Archivo** y **Descargar**.
 Archivo contiene las siguientes opciones: 
